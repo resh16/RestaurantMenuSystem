@@ -1,15 +1,24 @@
+
+
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using RestaurantMenuSystem.Controllers;
 using RestaurantMenuSystem.Models;
+using RestaurantMenuSystem.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
+
+
+
 
 namespace RestaurantMenuSystem
 {
@@ -27,8 +36,23 @@ namespace RestaurantMenuSystem
         {
             services.AddControllersWithViews();
 
-            services.AddDbContext<DataContext>(options =>
-               options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            
+            services.ConfigureApplicationCookie(config =>
+            {
+                config.LoginPath = Configuration["Application:LoginPath"];
+            });
+
+
+            services.AddRazorPages();
+
+            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<DataContext>();
+
+            services.AddDbContext<Models.DataContext>(options =>
+               options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+           );
+
+
+            services.AddScoped<IAccountRepository, AccountRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +72,7 @@ namespace RestaurantMenuSystem
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
@@ -56,7 +81,11 @@ namespace RestaurantMenuSystem
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapRazorPages();
             });
         }
     }
 }
+
+

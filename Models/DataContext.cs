@@ -19,6 +19,8 @@ namespace RestaurantMenuSystem.Models
         }
 
         public DbSet<AdminMenuModel> adminMenuModels { get; set; }
+
+       
         public DbSet<RestaurantMenuSystem.Models.SignInModel> SignInModel { get; set; }
         public DbSet<RestaurantMenuSystem.Models.SignUpUserModel> SignUpModel { get; set; }
 

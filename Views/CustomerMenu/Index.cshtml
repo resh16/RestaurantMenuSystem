@@ -1,0 +1,69 @@
+﻿@model IEnumerable<RestaurantMenuSystem.Models.AdminMenuModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row">
+    <div class="col-10">
+        <h4 class="text=center"> Menu Items </h4>
+    </div>
+
+</div>
+
+@*<div class="card-deck">*@
+
+
+@*@foreach (var menu in Model)
+         {
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="@("~/image/"+menu.ImageName)" asp-append-version="true" width="200px" height="200px" class="img-fluid rounded-start" alt="Image not available">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title"> @Html.DisplayFor(modelItem => menu.Name) </h5>
+
+                            <p class="card-text"> @Html.DisplayFor(modelItem => menu.Description) </p>
+                            <p class="card-text"><small class="text-muted"> Rs @Html.DisplayFor(modelItem => menu.Price) </small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+         }
+    </div>*@
+
+
+<div class="card-deck">
+
+    @foreach (var item in Model)
+    {
+        <div class="card m-3" style="min-width: 18rem; max-width: 30.5%;">
+
+            <img src="@("~/image/"+item.ImageName)" class="card-img-top" asp-append-version="true" width="200px" height="200px" />
+            <div class="card-body">
+                <h5 class="card-title text-center"> @Html.DisplayFor(modelItem => item.Name) </h5>
+                <p class="card-text text-center">  @Html.DisplayFor(modelItem => item.Description) </p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item text-center"> Rs @Html.DisplayFor(modelItem => item.Price) </li>
+            </ul>
+
+            
+
+
+        </div>
+
+    }
+
+</div>
+
+
+
+
+
+
+
+

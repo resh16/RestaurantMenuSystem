@@ -1,6 +1,7 @@
 
 
 
+using DNTCaptcha.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -36,7 +37,12 @@ namespace RestaurantMenuSystem
         {
             services.AddControllersWithViews();
 
-            
+            services.AddDNTCaptcha(options =>
+        options.UseCookieStorageProvider()
+            .ShowThousandsSeparators(false).WithEncryptionKey("123456")
+    );
+
+
             services.ConfigureApplicationCookie(config =>
             {
                 config.LoginPath = Configuration["Application:LoginPath"];
